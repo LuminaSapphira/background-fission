@@ -1,5 +1,5 @@
 pkgname=background-fission
-pkgver=1.0.0
+pkgver=0.1.0
 pkgrel=1
 pkgdesc="Multi-monitor background manager"
 arch=('x86_64')
@@ -8,4 +8,17 @@ license=('Apache')
 depends=()
 optdepends=()
 makedepends=('rust')
-source=('https://github.com/'
+source=("git+https://github.com/CerulanLumina/background-fission.git#tag=0.1.0")
+md5sums=('SKIP')
+build() {
+  cd ${pkgname}
+  cargo build --release --locked
+}
+check() {
+  cd ${pkgname}
+  cargo test --release --locked
+}
+package() {
+  cd ${pkgname}
+  install -Dm 755 "target/release/${pkgname}" -t "${pkgdir}/usr/bin"
+}

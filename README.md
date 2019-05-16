@@ -4,6 +4,8 @@
 
 ---
 `background-fission` is a solution for multi-monitor linux users to set different backgrounds on each monitor.
+**This project is very new, and as a result only supports the Cinnamon desktop environment.
+Feel free to create issues and/or pull requests for other desktop environments.**
 
 **Features:**
 - Set a static image or slideshow to each monitor

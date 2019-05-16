@@ -1,0 +1,11 @@
+pkgname=background-fission
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Multi-monitor background manager"
+arch=('x86_64')
+url="https://github.com/CerulanLumina/background-fission"
+license=('Apache')
+depends=()
+optdepends=()
+makedepends=('rust')
+source=('https://github.com/'

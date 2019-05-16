@@ -1,0 +1,9 @@
+[Unit]
+Description=background-fission background manager
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/background-fission
+
+[Install]
+WantedBy=default.target

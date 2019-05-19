@@ -12,6 +12,8 @@ use std::sync::{Arc, Mutex};
 use std::fs::{DirBuilder};
 use std::path::PathBuf;
 use thread_priority::{ThreadPriority, ThreadSchedulePolicy, NormalThreadSchedulePolicy};
+use std::env::args;
+use std::process::exit;
 
 
 mod config;
@@ -23,9 +25,23 @@ fn main() {
 
     let bfconfig = Arc::new(BFConfig::load());
 
+    make_and_set_background(bfconfig.clone(), get_epoch());
+
     // Cron scheduler
     let mut sched = JobScheduler::new();
     let parsed_cron: Schedule = bfconfig.delay.parse().expect("Unable to parse cron delay");
+
+
+    if args().len() == 1 {
+        // should never fail after check
+        if args().next().unwrap().eq("--daemon") {
+            println!("Running in daemon mode.");
+        } else {
+            exit(0);
+        }
+    } else {
+        exit(0);
+    }
 
     // Cron schedule task
     sched.add(Job::new(parsed_cron, || {
@@ -52,8 +68,6 @@ fn main() {
         make_and_set_background(bfconfig.clone(), unique);
 
     }));
-
-    make_and_set_background(bfconfig.clone(), get_epoch());
 
     loop {
         sched.tick();

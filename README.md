@@ -5,14 +5,18 @@
 ---
 `background-fission` is a solution for multi-monitor linux users to set different backgrounds on each monitor.
 
-**This project is very new, and as a result only supports the Cinnamon desktop environment.
-Feel free to create issues and/or pull requests for other desktop environments.**
-
 **Features:**
 - Set a static image or slideshow to each monitor
 - Configure monitor resolution and offset
 - Periodically changes the slideshow image
 - Slideshow period set via a CRON-like syntax
+- Set the background
+    - `feh` for most desktop environments
+    - Cinnamon `dconf` settings are also supported
+    
+## Dependencies
+If using the `feh` backend to set desktop backgrounds, the `feh` binary
+must be installed and in the user's PATH.
 
 ## Building
 `background-fission` is a Rust crate, and can be built using `cargo` commands:
@@ -27,14 +31,24 @@ Feel free to create issues and/or pull requests for other desktop environments.*
 4. Use the [provided systemd unit](https://github.com/CerulanLumina/background-fission/blob/master/dist/background-fission.service) or your own to automatically start `background-fission`.
     - If you want to change the config file, simply do so and restart.
 
+###### Daemon Mode
+Pass `--daemon` to `background-fission` to let background fission change
+the background every configured delay interval. This is recommended if
+using a systemd unit.
+
+###### Finding monitor resolution and offset values
+
 *I recommend using `xrandr` to find the appropriate values for configuration*.
 ```sh
 # Find the total screen size
 xrandr | grep -oP '(?<=current )\d+ x \d+'
+
 # 7040 x 1440
 
+==============================================================
+
 # Find each monitor's resolution and offset
-$ xrandr | grep -oP '^.* connected (primary )?\d+x\d+\+\d+\+\d+'
+xrandr | grep -oP '^.* connected (primary )?\d+x\d+\+\d+\+\d+'
 
 # Format: {width}x{height}+{x_offset}+{y_offset}
 # HDMI-0 connected 1920x1080+5120+360
@@ -80,9 +94,10 @@ $ xrandr | grep -oP '^.* connected (primary )?\d+x\d+\+\d+\+\d+'
   ],
   
   "delay": "0 1/30 * * * * *",                          // The delay (ex: every 30 minutes)
+                                                        // Only affects daemon mode
   
-  "backend": "Cinnamon"                                 // The backend to use for actually
+  "backend": "Feh"                                      // The backend to use for actually
                                                         // changing the desktop background.
-                                                        // Currently only Cinnamon is supported.
+                                                        // Use "Feh" for most Desktop Environments
 }
 ```

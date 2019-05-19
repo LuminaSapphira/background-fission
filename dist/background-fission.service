@@ -3,7 +3,7 @@ Description=background-fission background manager
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/background-fission
+ExecStart=%h/.local/bin/background-fission --daemon
 
 [Install]
 WantedBy=default.target

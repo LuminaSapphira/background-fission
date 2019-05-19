@@ -29,7 +29,8 @@ pub struct MonitorConfig {
 
 #[derive(Serialize, Deserialize)]
 pub enum Backend {
-    Cinnamon
+    Cinnamon,
+    Feh,
 }
 
 impl BFConfig {
@@ -65,7 +66,7 @@ impl BFConfig {
                 height: 1080,
                 monitors,
                 delay: String::from("0 1/30 * * * * *"),
-                backend: Backend::Cinnamon
+                backend: Backend::Feh
             };
 
             to_writer_pretty(config_file, &bf_config).expect("Unable to write config file");

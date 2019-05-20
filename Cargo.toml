@@ -1,6 +1,6 @@
 [package]
 name = "background-fission"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Kate Vandermolen <kate@cerulan.net>"]
 edition = "2018"
 license = "Apache-2.0"

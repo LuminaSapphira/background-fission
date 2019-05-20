@@ -32,9 +32,9 @@ fn main() {
     let parsed_cron: Schedule = bfconfig.delay.parse().expect("Unable to parse cron delay");
 
 
-    if args().len() == 1 {
+    if args().len() == 2 {
         // should never fail after check
-        if args().next().unwrap().eq("--daemon") {
+        if args().skip(1).next().unwrap().eq("--daemon") {
             println!("Running in daemon mode.");
         } else {
             exit(0);
